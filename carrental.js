@@ -10,6 +10,8 @@ const schema = gql`
       customers: [Customer!]!,
       car(id: ID!): Car,
       cars: [Car!]!,
+      rentalActivity(id: ID!): RentalActivity,
+      rentalActivities: [RentalActivity!]!,
       invoice(id: ID!): Invoice,
       invoices: [Invoice!]!,
       invoicesByCustomer(customerid: ID!): [Invoice!]!, 
@@ -28,7 +30,7 @@ const schema = gql`
     phone: String!,
   }
 
-     type Car {
+      type Car {
       id: ID!,
       name: String!,
       model: String!,
@@ -36,20 +38,27 @@ const schema = gql`
     
        }
       
+       type RentalActivity {
+         id: ID!,
+         carid: ID!,
+         invoiceid: ID!,
+         bookingstatus: String!,
+
+       }
      
 
-  type Invoice {
-    id: ID!,
-    createdDate: String!,
-    paymentDate: String,
-    customer: Customer!
-    description: String!
+     type Invoice {
+      id: ID!,
+      createdDate: String!,
+      paymentDate: String,
+      customerid: ID!
+      description: String!
     }
     
-    type ItemCreatedResponse{
+     type ItemCreatedResponse{
       success: Boolean!
     }
-    type ItemupdatedResponse{
+     type ItemupdatedResponse{
       success: Boolean!
     }
     
@@ -77,8 +86,10 @@ const customers = [
   },
 
 ];
+
+  
 let a = 1;
-let Cars = [
+let cars = [
   {
         id: a++,
         name: "Toyota",
@@ -95,22 +106,30 @@ let Cars = [
   },
 
 ];
-
-let i= 1;
+let r = 1;
+let rentalActivities = [
+  {
+    id: r++,
+    carid: a++,
+    invoiceid: c++,
+    bookingstatus: "booked",
+  },
+];
+let i = 1;
 let invoices = [
   {
-       id: "1",
-       createdDate: "2019-03-10",
-       paymentDate: null,
-       customer: "2",
-       description: "Good Customer"
+       id: i++,
+       createdDate: "2019-03-01",
+       paymentDate: 2019-03-07,
+       customerid: c++,
+       description: "Good Customer",
   },
   {
-       id: "2",
-       createdDate: "2019-02-19",
-       paymentDate: null,
-       customer: "1",
-       description: "Barrel of fish"
+       id: i++,
+       createdDate: "2019-03-02",
+       paymentDate: 2019-03-08,
+       customerid: c++,
+       description: "Good Car",
   },
 ];
 
@@ -118,7 +137,7 @@ let invoices = [
 const resolvers = {
   Query: {
        customer: (parent, args, context, info) => {      
-       return costumers.find(c => c.id === +args.id);
+       return custumers.find(c => c.id === +args.id);
     },
        customers: (parents, args, context, info) => {
        return customers;
@@ -129,6 +148,12 @@ const resolvers = {
         cars: (parents, args, context, info) => {
         return cars;
     },
+        rentalActivity:  (parent, args, context, info) => {    
+        return rentalActivities.find(r => r.id === +args.id);
+        },
+        rentalActivities: (parent, args, context, info) => {    
+          return rentalActivities;
+        },
        invoice: (parents, args, context, info) => {
        const invoice = invoices.find(i => i.id  === +args.id);
     },
