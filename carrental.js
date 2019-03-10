@@ -54,7 +54,7 @@ const schema = gql`
       customerid: ID!
       description: String!
     }
-    
+  }
      type ItemCreatedResponse{
       success: Boolean!
     }
@@ -62,6 +62,45 @@ const schema = gql`
       success: Boolean!
     }
     
+  
+    type Mutation {
+      createCustomer (
+        name: String,
+        email: String,
+        address: String,
+        addressCity: String,
+        addressCountry: String,
+        phone: String
+      )
+      
+      : ItemCreatedResponse!
+  
+      updateCustomer (
+        id: ID,
+        name: String,
+        email: String,
+        address: String,
+        addressCity: String,
+        addressCountry: String,
+        phone: String
+      )
+     
+      :ItemupdatedResponse!
+    
+    createCar(
+      name: String,
+      model: String,
+      colour: String
+
+   )
+   
+    :ItemCreatedResponse!
+     updateCar(
+      name: String,
+      model: String,
+      colour: String
+      ):ItemupdatedResponse!
+     }
     `;
 let c = 1;
 const customers = [
@@ -135,9 +174,10 @@ let invoices = [
 
 
 const resolvers = {
-  Query: {
+  Query:
+   {
        customer: (parent, args, context, info) => {      
-       return custumers.find(c => c.id === +args.id);
+       return customers.find(c => c.id === +args.id);
     },
        customers: (parents, args, context, info) => {
        return customers;
@@ -159,11 +199,82 @@ const resolvers = {
     },
        invoices:(parents, args, context, info) => {
        return invoices;
-    }
-  },
-  };
+    },
+      invoicesByCustomer: (parent, args, context, info) => {
+       if (args.customerid) {
+         return invoices.filter(i => i.customerid === +args.customerid);
+       }
+      },
+      invoicesByCar: (parent, args, context, info) => {
+        if (args.carid) {
+            return invoices.filter(i => i.carid === +args.carid);
+        }  
+  }
 
+
+},
+Mutation: {
+    createCustomer: (parent, args, context, info) => {
+           const customer = {
+           id: ((customers.length) + 1).toString(),
+           name: args.name,
+           email: args.email,
+           address: args.address,
+           addressCity: args.addressCity,
+           addressCountry: args.addressCountry,
+           phone: args.phone,
+           }
+    
+        customers.push(customer);
+        return {success: true}
+  },
+       updateCustomer: (parent, args, context, info) => {
+       if (args.id) {
+       const customer = customers.find(c => c.id === +args.id);
+
+      if (customer) {
+        customer.name = args.name ? args.name : customer.name;
+        customer.email = args.email ? args.email :  customer.email;
+        customer.address = args.address ? args.address : customer.address;
+        customer.addressCity = args.addressCity ? args.addressCity : customer.addressCity;
+        customer.addressCountry = args.addressCountry ? args.addressCountry : customer.addressCountry;
+        customer.phone = args.phone ? args.phone: customer.phone;
+        return { success: true }
+      }
+
+    }
+    return {success: false }
+    },
+    createCar: (parent,args,context, info)=>{
+      const car={
+        id:((cars.length)+1).toString(),
+        name:args.name,
+        model:args.model,
+        colour:args.colour
+      };
+      cars.push(car);
+      return{success:true};
   
+    },
+    updateCar: (parent, args, context, info) => {
+      if (args.id) {
+          const car = cars.find(c => a.id === +args.id);
+          if (car) {
+            car.name = args.name ? args.name : car.name;
+              car.model = args.model ? args.model : car.model;
+              car.colour = args.colour ? args.colour : car.colour;
+            return {success: true};
+          }
+      }
+      return {success: false}
+  },
+  }
+   
+  };
+ 
+
+    
+
 const server = new ApolloServer({
      typeDefs: schema,
      resolvers,
