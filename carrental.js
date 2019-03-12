@@ -111,7 +111,7 @@ const schema = gql`
      ):ItemCreatedResponse!
 
      updateInvoice(
-      id: ID!,
+    
       createdDate: String!,
       paymentDate: String,
       customerid: ID!,
