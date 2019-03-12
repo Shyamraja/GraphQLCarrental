@@ -51,10 +51,10 @@ const schema = gql`
       id: ID!,
       createdDate: String!,
       paymentDate: String,
-      customerid: ID!
-      description: String!
+      customerid: ID!,
+      description: String!,
     }
-  }
+  
      type ItemCreatedResponse{
       success: Boolean!
     }
@@ -92,14 +92,34 @@ const schema = gql`
       model: String,
       colour: String
 
-   )
-   
-    :ItemCreatedResponse!
-     updateCar(
+   ):ItemCreatedResponse!
+    
+   updateCar(
+     id: ID,
       name: String,
       model: String,
-      colour: String
+      colour: String,
       ):ItemupdatedResponse!
+
+      createInvoice(
+        id: ID!,
+        createdDate: String!,
+        paymentDate: String,
+        customerid: ID!,
+        description: String!
+  
+     ):ItemCreatedResponse!
+
+     updateInvoice(
+      id: ID!,
+      createdDate: String!,
+      paymentDate: String,
+      customerid: ID!,
+      description: String!,
+
+     ):ItemupdatedResponse!
+
+     
      }
     `;
 let c = 1;
@@ -145,15 +165,6 @@ let cars = [
   },
 
 ];
-let r = 1;
-let rentalActivities = [
-  {
-    id: r++,
-    carid: a++,
-    invoiceid: c++,
-    bookingstatus: "booked",
-  },
-];
 let i = 1;
 let invoices = [
   {
@@ -171,6 +182,18 @@ let invoices = [
        description: "Good Car",
   },
 ];
+let r = 1;
+let rentalActivities = [
+  {
+    id: r++,
+    carid: a++,
+    invoiceid: i++,
+    bookingstatus: "booked",
+  },
+];
+
+
+
 
 
 const resolvers = {
@@ -258,7 +281,7 @@ Mutation: {
     },
     updateCar: (parent, args, context, info) => {
       if (args.id) {
-          const car = cars.find(c => a.id === +args.id);
+          const car = cars.find(a => a.id === +args.id);
           if (car) {
             car.name = args.name ? args.name : car.name;
               car.model = args.model ? args.model : car.model;
@@ -267,9 +290,35 @@ Mutation: {
           }
       }
       return {success: false}
-  },
-  }
-   
+    },
+      createInvoice: (parent,args,context, info)=>{
+        const invoice={
+          id:((invoices.length)+1).toString(),
+          createdDate:args.createdDate,
+          paymentDate:args.paymentDate,
+          customerid:args.customerid,
+          description:args.description
+        };
+        invoices.push(invoice);
+        return{success:true} 
+    
+      },
+      updateInvoice: (parent, args, context, info) => {
+        if (args.id) {
+            const invoice = invoices.find(i => i.id === +args.id);
+            if (invoice) {
+              invoice.createdDate = args.createdDate ? args.createdDate : invoice.createdDate;
+                invoice.paymentDate = args.paymentDate ? args.paymentDate : invoice.paymentDate;
+                invoice.customerid = args.customerid ? args.customerid : invoice.customerid;
+                invoice.description = args.description ? args.description : invoice.description;
+                return {success: true}
+            }
+        }
+        return{success:false}
+      }
+    
+    }
+
   };
  
 
