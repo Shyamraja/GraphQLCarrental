@@ -40,7 +40,6 @@ const schema = gql`
       
        type RentalActivity {
          id: ID!,
-         id: ID!,
          carmodel: String!,
          bookingstatus: String!,
          
