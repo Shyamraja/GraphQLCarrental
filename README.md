@@ -5,7 +5,7 @@ then run the project
 
 
 
-show all ustomers
+show all customers
 ![showallcustomer](https://user-images.githubusercontent.com/32189508/54265973-1fe86d80-457f-11e9-8143-df30fd4e396d.png)
 show customer by ID
 ![showcustomerbyid](https://user-images.githubusercontent.com/32189508/54266757-b0737d80-4580-11e9-91f7-469088fd1e18.png)
