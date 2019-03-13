@@ -340,7 +340,7 @@ Mutation: {
       },
       updateRentalActivity: (parent, args, context, info) => {
         if (args.id) {
-            const RentalActivity = rentalActivities.find(i => i.id === +args.id);
+            const rentalActivity = rentalActivities.find(i => i.id === +args.id);
             if (rentalActivity) {
               rentalActivity.carmodel = args.carmodel ? args.carmodel : rentalActivity.carmodel;
               rentalActivity.bookingstatus = args.bookingstatus ? args.bookingstatus : rentalActivity.bookingstatus;
