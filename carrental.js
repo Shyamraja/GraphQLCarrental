@@ -102,7 +102,7 @@ const schema = gql`
       ):ItemupdatedResponse!
 
       createInvoice(
-        id: ID!,
+      
         createdDate: String!,
         paymentDate: String,
         customerid: ID!,
@@ -111,15 +111,27 @@ const schema = gql`
      ):ItemCreatedResponse!
 
      updateInvoice(
-    
+      id: ID!,
       createdDate: String!,
       paymentDate: String,
       customerid: ID!,
       description: String!,
 
      ):ItemupdatedResponse!
-
      
+     createRentalActivity(
+      carmodel: String!,
+      bookingstatus: String,
+ 
+    )
+     :ItemCreatedResponse!
+
+     updateRentalActivity(
+       id: ID!,
+       carmodel: String!,
+       bookingstatus: String!,
+     )
+     :ItemupdatedResponse!
      }
     `;
 let c = 1;
@@ -186,9 +198,8 @@ let r = 1;
 let rentalActivities = [
   {
     id: r++,
-    carid: a++,
-    invoiceid: i++,
-    bookingstatus: "booked",
+    carmodel: "Hyundai299",
+    bookingstatus: "booked"
   },
 ];
 
@@ -315,7 +326,29 @@ Mutation: {
             }
         }
         return{success:false}
-      }
+      },
+
+      createRentalActivity: (parent,args,context, info)=>{
+        const rentalActivity={
+          id:((rentalActivities.length) + 1).toString(),
+          carmodel:args.carmodel,
+          bookingstatus:args.bookingstatus
+        };
+        rentalActivities.push(rentalActivity);
+        return{success:true}
+    
+      },
+      updateRentalActivity: (parent, args, context, info) => {
+        if (args.id) {
+            const RentalActivity = rentalActivities.find(i => i.id === +args.id);
+            if (rentalActivity) {
+              rentalActivity.carmodel = args.carmodel ? args.carmodel : rentalActivity.carmodel;
+              rentalActivity.bookingstatus = args.bookingstatus ? args.bookingstatus : rentalActivity.bookingstatus;
+                return {success: true}
+            }
+        }
+        return{success:false}
+      },
     
     }
 
