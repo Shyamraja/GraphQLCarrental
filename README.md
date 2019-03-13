@@ -20,17 +20,17 @@ create car
 ![createcar](https://user-images.githubusercontent.com/32189508/54266200-94bba780-457f-11e9-874d-5c37fbc88471.png)
 UpdateCustomer
 ![updatecustomer](https://user-images.githubusercontent.com/32189508/54266262-b2890c80-457f-11e9-9319-7f57e7d8f704.png)
-Updatecar
+Update car
 ![updatecar](https://user-images.githubusercontent.com/32189508/54266529-3ba04380-4580-11e9-9c2c-b3eac99d51bc.png)
-showinvoices
+show  invoices
 ![getinvoices](https://user-images.githubusercontent.com/32189508/54266910-f4ff1900-4580-11e9-8128-379cb56b4127.png)
-createinvoices
+create  invoices
 ![createinvoice](https://user-images.githubusercontent.com/32189508/54266928-fd575400-4580-11e9-959f-350d304e45c5.png)
-showrental activities
+show  rental activities
 ![showrentalactivity](https://user-images.githubusercontent.com/32189508/54267028-27a91180-4581-11e9-8022-4287cc3c7b45.png)
-createrentalactivities
+create  rental  activities
 ![createrentalactivity](https://user-images.githubusercontent.com/32189508/54267055-342d6a00-4581-11e9-849e-1d3603172712.png)
-updaterentalactivities
+update  rental  activities
 ![updaterentalactivity](https://user-images.githubusercontent.com/32189508/54267065-3bed0e80-4581-11e9-98ad-157a08598ef2.png)
 
 
