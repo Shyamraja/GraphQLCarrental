@@ -1,4 +1,10 @@
 GraphQlCarrental
+Download or clone the repository
+npm install in the folder 
+then run the project 
+
+
+
 show all ustomers
 ![showallcustomer](https://user-images.githubusercontent.com/32189508/54265973-1fe86d80-457f-11e9-8143-df30fd4e396d.png)
 show customer by ID
